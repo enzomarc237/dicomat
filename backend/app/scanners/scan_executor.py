@@ -5,18 +5,17 @@ Orchestrates the full scanning process: cloning, parsing, example extraction,
 redaction, and document generation.
 """
 
-import asyncio
+from typing import List, Dict, Any, Optional
+
 import structlog
 from datetime import datetime
-from typing import List, Dict, Any, Optional
-from pathlib import Path
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from app.scanners.repository_scanner import RepositoryScanner, FileInfo, ScanResult
-from app.parsers.code_parser import get_parser, CodeElement, UsageExample
-from app.redaction.secret_redactor import get_redactor, redact_content
+from app.parsers.code_parser import get_parser, CodeElement
+from app.redaction.secret_redactor import get_redactor
 from app.models.schemas import Repository, Scan, Document
 from app.models.pydantic_schemas import ScanStatus, DocumentType
 from app.db.database import get_db

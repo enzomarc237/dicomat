@@ -6,7 +6,7 @@ Supports API keys, passwords, tokens, PII, and custom patterns.
 """
 
 import re
-from typing import List, Dict, Any, Optional, Set
+from typing import List, Dict, Optional
 from dataclasses import dataclass
 from enum import Enum
 
@@ -114,7 +114,6 @@ class SecretDetector:
     def detect(self, content: str) -> List[DetectedSecret]:
         """Detect all secrets in the given content."""
         secrets = []
-        lines = content.split('\n')
         
         for secret_type, compiled in self._compiled_patterns.items():
             for pattern, confidence in compiled:

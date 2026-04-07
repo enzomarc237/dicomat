@@ -1,17 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import List
 
 from app.db.database import get_db
-from app.models import (
-    RepositoryCreate,
-    RepositoryUpdate,
-    RepositoryResponse,
-    ScanCreate,
-    ScanResponse,
-    DocumentResponse,
-    HealthStatus
-)
+from app.models import HealthStatus
 from app.config import settings
 
 router = APIRouter()

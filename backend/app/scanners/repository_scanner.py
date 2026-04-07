@@ -7,7 +7,7 @@ Handles cloning repositories, discovering files, and orchestrating the scanning 
 import os
 import shutil
 from pathlib import Path
-from typing import List, Dict, Any, Optional, AsyncGenerator
+from typing import List, Optional, AsyncGenerator
 from dataclasses import dataclass, field
 from datetime import datetime
 import git

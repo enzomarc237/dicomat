@@ -5,7 +5,6 @@ Uses tree-sitter for AST-based parsing of source code files.
 Extracts functions, classes, methods, and usage patterns.
 """
 
-from pathlib import Path
 from typing import List, Dict, Any, Optional
 from dataclasses import dataclass, field
 import logging
@@ -194,7 +193,7 @@ class PythonParser(BaseParser):
                     file_path='<current>',
                     line_number=i + 1,
                     code_snippet=line.strip(),
-                    context='\n'.join(lines[max(0, i-2):min(len(lines), i+3)])
+                    context='\n'.join(lines[max(0, i - 2):min(len(lines), i + 3)])
                 ))
         
         return examples

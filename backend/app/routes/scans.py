@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 from typing import List, Optional
@@ -15,6 +15,7 @@ from app.models.pydantic_schemas import (
     ScanStatus,
     TriggerType
 )
+from app.scanners.scan_executor import run_scan
 
 router = APIRouter()
 
@@ -154,6 +155,7 @@ async def delete_repository(
 async def trigger_scan(
     repository_id: int,
     scan_data: ScanCreate,
+    background_tasks: BackgroundTasks,
     db: AsyncSession = Depends(get_db)
 ):
     """Trigger a new scan for a repository."""
@@ -181,9 +183,8 @@ async def trigger_scan(
     await db.flush()
     await db.refresh(scan)
     
-    # TODO: Queue scan job with Celery
-    # from app.tasks import run_scan
-    # run_scan.delay(scan.id)
+    # Queue scan job in background
+    background_tasks.add_task(run_scan, scan.id)
     
     return scan
 
